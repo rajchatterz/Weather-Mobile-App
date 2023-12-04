@@ -2,7 +2,7 @@ import { View, Text, TextInput, Button,ActivityIndicator,StyleSheet, ImageBackgr
 import React, { useState } from 'react'
 import { StatusBar } from 'react-native'
 import {Ionicons } from '@expo/vector-icons'
-
+import WeatherSearch from './component/WeatherSearch'
 const WeatherApp = () => {
   const [city, setCity] = useState('')
   const [weatherData, setWeatherData] = useState(null)
@@ -47,35 +47,13 @@ const WeatherApp = () => {
       <ImageBackground style={styles.imageContainer} source={require('./assets/image/bcg.jpeg')}>
       
         <View>
-          <View style={styles.searchInput}>
-            <TextInput style={{borderWidth:1,paddingVertical:1,fontSize:20}} placeholder='Enter the City' onChangeText={(text)=>setCity(text)} />
-            <TouchableOpacity onPress={handleGetWeather}>
-              <Text style={styles.btn}>Search</Text>
-            </TouchableOpacity>
-          </View>
-          {loading ? (
-            <ActivityIndicator/>
-          ) : error ? (
-              <Text>Error not found</Text>
-          ):weatherData?(
-            <View style={styles.container}>   
             <View>
-              <Text>{ weatherData.name}</Text>
-              <Text>Time</Text>
+          <WeatherSearch onPress={ handleGetWeather} onChangeText={ (text)=>setCity(text)} />
             </View>
             <View>
-            <View>
-              <Text>15 degree C</Text>
-              <Text>Cloudy</Text>
+              
             </View>
-            <View>
-              <Text>1</Text>
-              <Text>1</Text>
-              <Text>1</Text>
-            </View>
-                </View>
-                </View>
-          ):null}
+          
         </View>
         
      
