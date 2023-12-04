@@ -41,22 +41,31 @@ const WeatherApp = () => {
       setCity('Not Found')
     }
   }
-  console.log(city)
-  
+
+  let date1 = new Date((weatherData.dt * 1000))
+  let date = date1.toLocaleString()
   return (
       <ImageBackground style={styles.imageContainer} source={require('./assets/image/bcg.jpeg')}>
-      
-        <View>
-            <View>
-          <WeatherSearch onPress={ handleGetWeather} onChangeText={ (text)=>setCity(text)} />
+        <View style={styles.viewContainer}>
+          <WeatherSearch onPress={handleGetWeather} onChangeText={(text) => setCity(text)} />
+          <View style={styles.viewContainer}>
+            <View style={styles.tempContainer}>
+              <View style={styles.mainContainer}>
+                <Text style={{fontSize:40, fontWeight:'bold',color:'white',fontFamily:''}}>{loading ? (<ActivityIndicator />) : error ? (<Text>Error found</Text>) : weatherData ? <Text>{ weatherData.name}</Text>:null}</Text>
+                <Text>{loading ? (<ActivityIndicator />) : error ? (<Text>Error found</Text>) : weatherData ? <Text>{date}</Text>:null}</Text>
+              </View>
+              <View style={styles.mainContainer}>
+                <Text>{loading ? (<ActivityIndicator />) : error ? (<Text>Error found</Text>) : weatherData ? <Text>{ (parseFloat(weatherData.main.temp)-273).toFixed(2)}</Text>:null}</Text>
+                <Text>{loading ? (<ActivityIndicator />) : error ? (<Text>Error found</Text>) : weatherData ? <Text>{ weatherData.weather[0].main}</Text>:null}</Text>
+              </View>
             </View>
             <View>
-              
+              <Text>{loading ? (<ActivityIndicator />) : error ? (<Text>Error found</Text>) : weatherData ? <Text>{ weatherData.main.pressure}</Text>:null}</Text>
+              <Text>{loading ? (<ActivityIndicator />) : error ? (<Text>Error found</Text>) : weatherData ? <Text>{ weatherData.main.humidity}</Text>:null}</Text>
+              <Text>{loading ? (<ActivityIndicator />) : error ? (<Text>Error found</Text>) : weatherData ? <Text>{ (parseFloat(weatherData.main.temp)-273).toFixed(2)}</Text>:null}</Text>
             </View>
-          
+          </View>
         </View>
-        
-     
       </ImageBackground>
     
   )
@@ -65,21 +74,23 @@ export default WeatherApp
 
 const styles = StyleSheet.create({
   imageContainer: {
+    flex:1,
+    objectFit:'cover'
+  },
+  viewContainer: {
     flex: 1,
-  },
-  container: {
-    
-    marginTop: Platform.OS === 'android' ? 30:0,
-  },
-  searchInput: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    gap:70,
     justifyContent: 'space-evenly',
-    marginTop: 60,
-    
+    flexDirection: 'column',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
-  btn: {
-    backgroundColor: 'yellow',
-    padding:10
+  tempContainer: {
+    flex: 1,
+    justifyContent:'space-between',
+  },
+  mainContainer: {
+    justifyContent: 'center',
+    gap:10
   }
 })
