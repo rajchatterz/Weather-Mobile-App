@@ -17,7 +17,7 @@ const WeatherApp = () => {
     setLoading(true)
     setError(false) 
     try {
-      const API_KEY = '97abbfee3233b110cffbb6407cc22df3'
+      const API_KEY = 'Enter Your api'
       const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
 
       const response = await fetch(API_URL)
