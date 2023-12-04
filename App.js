@@ -1,5 +1,7 @@
-import { View, Text, TextInput, Button,ActivityIndicator,StyleSheet, ImageBackground } from 'react-native'
+import { View, Text, TextInput, Button,ActivityIndicator,StyleSheet, ImageBackground, Platform, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
+import { StatusBar } from 'react-native'
+import {Ionicons } from '@expo/vector-icons'
 
 const WeatherApp = () => {
   const [city, setCity] = useState('')
@@ -42,34 +44,64 @@ const WeatherApp = () => {
   console.log(city)
   
   return (
-    <View style={styles.container}>
       <ImageBackground style={styles.imageContainer} source={require('./assets/image/bcg.jpeg')}>
-      <TextInput onChangeText={(text)=>setCity(text)} placeholder='Enter The City Name'/>
-      <Button title='Tap Me' onPress={handleGetWeather} />
-      {loading ? (
-        <ActivityIndicator/>
-      ) : error ? (
-          <Text>Error fetching weather data</Text>
-        ) : weatherData ? (
+      
+        <View>
+          <View style={styles.searchInput}>
+            <TextInput style={{borderWidth:1,paddingVertical:1,fontSize:20}} placeholder='Enter the City' onChangeText={(text)=>setCity(text)} />
+            <TouchableOpacity onPress={handleGetWeather}>
+              <Text style={styles.btn}>Search</Text>
+            </TouchableOpacity>
+          </View>
+          {loading ? (
+            <ActivityIndicator/>
+          ) : error ? (
+              <Text>Error not found</Text>
+          ):weatherData?(
+            <View style={styles.container}>   
             <View>
-              <Text>{weatherData.main.temp}</Text>
+              <Text>{ weatherData.name}</Text>
+              <Text>Time</Text>
             </View>
-      ):null}
+            <View>
+            <View>
+              <Text>15 degree C</Text>
+              <Text>Cloudy</Text>
+            </View>
+            <View>
+              <Text>1</Text>
+              <Text>1</Text>
+              <Text>1</Text>
+            </View>
+                </View>
+                </View>
+          ):null}
+        </View>
+        
+     
       </ImageBackground>
-    </View>
+    
   )
 }
 export default WeatherApp
 
 const styles = StyleSheet.create({
-  container: {
-    
-    flex:1
-  },
   imageContainer: {
     flex: 1,
-    justifyContent: 'center', 
-    alignItems: 'center',
+  },
+  container: {
     
+    marginTop: Platform.OS === 'android' ? 30:0,
+  },
+  searchInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    marginTop: 60,
+    
+  },
+  btn: {
+    backgroundColor: 'yellow',
+    padding:10
   }
 })
