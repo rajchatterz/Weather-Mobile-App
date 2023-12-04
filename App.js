@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button,ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, Button,ActivityIndicator,StyleSheet, ImageBackground } from 'react-native'
 import React, { useState } from 'react'
 
 const WeatherApp = () => {
@@ -42,7 +42,8 @@ const WeatherApp = () => {
   console.log(city)
   
   return (
-    <View style={{marginTop:100}}>
+    <View style={styles.container}>
+      <ImageBackground style={styles.imageContainer} source={require('./assets/image/bcg.jpeg')}>
       <TextInput onChangeText={(text)=>setCity(text)} placeholder='Enter The City Name'/>
       <Button title='Tap Me' onPress={handleGetWeather} />
       {loading ? (
@@ -54,8 +55,21 @@ const WeatherApp = () => {
               <Text>{weatherData.main.temp}</Text>
             </View>
       ):null}
-      
+      </ImageBackground>
     </View>
   )
 }
 export default WeatherApp
+
+const styles = StyleSheet.create({
+  container: {
+    
+    flex:1
+  },
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'center', 
+    alignItems: 'center',
+    
+  }
+})
